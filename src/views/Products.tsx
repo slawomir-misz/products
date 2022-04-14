@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../contexts/AuthContext'
+import { Button } from 'antd'
 
-type Props = {}
+export default function Products() {
+  const { currentUser, logout } = useContext(AuthContext)
 
-function Products({}: Props) {
+  const handleButtonClick = () => {
+    logout()
+  }
+
   return (
-    <div>Products</div>
+    <Button onClick={()=> handleButtonClick()}>Logout</Button>
   )
 }
-
-export default Products

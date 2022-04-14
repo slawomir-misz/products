@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Form, Input, Button } from 'antd'
-import { AuthContext } from '../../contexts/AuthContext'
+//import { AuthContext } from '../../contexts/AuthContext'
 
 type values = {
   email: string
@@ -10,15 +10,13 @@ type values = {
 
 const RegisterForm: React.FC = () => {
   const [form] = Form.useForm();
-  const { signup, user } = useContext(AuthContext)
 
   const onFinish = (values:values):void => {
-    signup(values.email, values.password)
+   // signup(values.email, values.password)
   };
 
   return (
     <Form form={form} onFinish={onFinish}>
-      {user && user.email}
       <Form.Item
         name="email"
         label="E-mail"
