@@ -3,7 +3,11 @@ import { Form, Input, Button, Checkbox, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { AuthContext } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+import { fadeInUp } from 'react-animations'
+import IconLogo from '../iconLogo/IconLogo'
+
+const fadeInUpAnimation = keyframes`${fadeInUp}`;
 
 type values = {
   username: string
@@ -66,6 +70,12 @@ const LoginForm: React.FC = () => {
       : 
         <></> 
       }
+
+      <StyledTitle>
+        Products App
+        [ <IconLogo /> ]
+      </StyledTitle>
+
       <Form
         name="normal_login"
         className="login-form"
@@ -132,5 +142,16 @@ const StyledFlexAndSpaceBetween = styled.div`
 `
 
 const StyledAlert = styled.div`
-  margin-bottom: 24px
+  top: -64px;
+  width: 100%;
+  position: absolute;
+  animation: 1s ${fadeInUpAnimation}
+  
+`
+const StyledTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  padding-bottom: 24px; 
+  font-size: 35px;
 `

@@ -23,6 +23,7 @@ const StyledWrapper = styled.div`
   height: 100vh;
 `
 const StyledContainer = styled.div`
+  position:relative;
   width: 100%;
   max-width: 350px;
 `
