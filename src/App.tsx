@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -9,13 +9,12 @@ import Login from './views/Login';
 import ProtectedRoutes from './routes/ProtectedRoutes';
 
 const App: React.FC = () => {
-  
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="products" element={<ProtectedRoutes><Products /></ProtectedRoutes>} />
-      <Route path="login" element={<Login />} />
-    </Routes>
+      <Routes>
+        <Route path="products" element={<ProtectedRoutes><Products /></ProtectedRoutes>} />
+        <Route path="login" element={<Login />} />
+      </Routes>
   </BrowserRouter>
   )
 }

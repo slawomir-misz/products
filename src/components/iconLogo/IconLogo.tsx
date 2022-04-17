@@ -5,7 +5,7 @@ const logoIcons:string[] = ['🍇', '🍉', '🍊', '🥭', '🍏', '🍅', '�
 
 const IconLogo: React.FC = () => { 
 
-  const [randomFruit, setRandomFruit] = useState<string>('')
+  const [randomFruit, setRandomFruit] = useState<string>('🍪')
   const getRandomFruit = () => {
     const randomIndex = Math.floor(Math.random() * logoIcons.length);
     const randomFruit = logoIcons[randomIndex]

@@ -12,6 +12,7 @@ const fadeInUpAnimation = keyframes`${fadeInUp}`;
 type values = {
   username: string
   password: string
+  remember: boolean
 }
 
 function reducer(errorState:string, errorCode:string):any {
@@ -41,7 +42,7 @@ const LoginForm: React.FC = () => {
     dispatchErrorState("")
     setLoading(true)
 
-    login(values.username, values.password)
+    login(values.username, values.password, values.remember)
     .then(()=>{
       setLoading(false)
       navigate('/products')
