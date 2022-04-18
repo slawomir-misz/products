@@ -1,19 +1,19 @@
 import React from 'react'
 import 'antd/dist/antd.min.css';
-import LoginForm from '../components/loginForm/LoginForm';
 import styled from 'styled-components'
+import PasswordResetForm from '../components/passwordResetForm/PasswordResetForm';
 
-const Login: React.FC = () => {
+const PasswordReset: React.FC = () => {
   return (
     <StyledWrapper>
       <StyledContainer>
-        <LoginForm />
+       <PasswordResetForm />
       </StyledContainer>
     </StyledWrapper>
   )
 }
 
-export default Login
+export default PasswordReset
 
 const StyledWrapper = styled.div`
   display:flex;

@@ -2,7 +2,7 @@ import React, { useContext, useReducer, useState } from 'react'
 import { Form, Input, Button, Checkbox, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { AuthContext } from '../../contexts/AuthContext'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components'
 import { fadeInUp } from 'react-animations'
 import IconLogo from '../iconLogo/IconLogo'
@@ -106,7 +106,7 @@ const LoginForm: React.FC = () => {
           },
         ]}
       >
-        <Input
+        <Input.Password
           prefix={<LockOutlined className="site-form-item-icon" />}
           type="password"
           placeholder="Password"
@@ -119,9 +119,8 @@ const LoginForm: React.FC = () => {
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
-          <a className="login-form-forgot" href="">
-            Forgot password?
-          </a>
+          <Link to="/password_reset">Forgot password?</Link>
+
         </StyledFlexAndSpaceBetween>
       </Form.Item>
 
