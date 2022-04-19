@@ -6,29 +6,11 @@ import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import { useNavigate } from "react-router-dom";
 import ErrorPopUp from "../errorPopUp/ErrorPopUp";
+import reducer from '../../reducers/ErrorReducer'
 
 type values = {
   password: string;
 };
-
-function reducer(errorState: string, errorCode: string): any {
-  switch (errorCode) {
-    case "":
-      return { message: "" };
-    case "auth/too-many-requests":
-      return { message: "Your account is temporary blocked" };
-    case "auth/wrong-password":
-      return { message: "Wrong password" };
-    case "auth/user-not-found":
-      return { message: "User not found" };
-    case "auth/weak-password":
-      return { message: "Password is to week"}
-    default:
-      return { message: "Some other error occured" };
-  }
-}
-
-const errorInitialState: string = "";
 
 const PasswordResetForm: React.FC = () => {
   let [searchParams] = useSearchParams();
@@ -36,7 +18,7 @@ const PasswordResetForm: React.FC = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [errorState, dispatchErrorState] = useReducer(
     reducer,
-    errorInitialState
+    ""
   );
   const navigate = useNavigate();
 
