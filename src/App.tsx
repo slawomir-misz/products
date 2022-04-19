@@ -15,6 +15,7 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<ProtectedRoutes><Products /></ProtectedRoutes>} />
         <Route path="products" element={<ProtectedRoutes><Products /></ProtectedRoutes>} />
         <Route path="login" element={<Login />} />
         <Route path="password_reset">

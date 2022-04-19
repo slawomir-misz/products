@@ -1,11 +1,12 @@
 import React, { useState, useReducer } from "react";
-import { Form, Input, Button, Alert, Result } from "antd";
+import { Form, Input, Button, Result } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import styled, { keyframes } from "styled-components";
 import { fadeInUp } from "react-animations";
 import { useNavigate } from 'react-router-dom';
+import ErrorPopUp from "../errorPopUp/ErrorPopUp";
 
 type values = {
   username: string;
@@ -47,21 +48,10 @@ const SendPasswordResetForm: React.FC = () => {
       });
   };
 
-  const handleCloseAlert = () => {
-    dispatchErrorState("");
-  };
-
   return (
     <>
       {errorState.message ? (
-        <StyledAlert>
-          <Alert
-            message={errorState.message}
-            type="error"
-            closable
-            onClose={handleCloseAlert}
-          />
-        </StyledAlert>
+        <ErrorPopUp message={errorState.message} dispatchErrorState={dispatchErrorState}/>
       ) : (
         <></>
       )}

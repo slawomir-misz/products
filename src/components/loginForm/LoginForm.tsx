@@ -1,11 +1,12 @@
 import React, { useContext, useReducer, useState } from 'react'
-import { Form, Input, Button, Checkbox, Alert } from 'antd'
+import { Form, Input, Button, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { AuthContext } from '../../contexts/AuthContext'
 import { useNavigate, Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components'
 import { fadeInUp } from 'react-animations'
 import IconLogo from '../iconLogo/IconLogo'
+import ErrorPopUp from '../errorPopUp/ErrorPopUp';
 
 const fadeInUpAnimation = keyframes`${fadeInUp}`;
 
@@ -53,21 +54,12 @@ const LoginForm: React.FC = () => {
     })
   };
 
-  const handleCloseAlert = () => {
-    dispatchErrorState("")
-  };
+
 
   return (
     <>
       {errorState.message ? 
-        <StyledAlert>
-          <Alert
-            message={errorState.message}
-            type="error"
-            closable
-            onClose={handleCloseAlert}
-          /> 
-        </StyledAlert>
+        <ErrorPopUp message={errorState.message} dispatchErrorState={dispatchErrorState}/>
       : 
         <></> 
       }
