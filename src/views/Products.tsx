@@ -1,16 +1,16 @@
-import React, { useContext } from 'react'
-import { AuthContext } from '../contexts/AuthContext'
-import { Button } from 'antd'
+import React from 'react'
+import Navbar from '../components/navBar/NavBar'
+import ProductsTable from '../components/table/ProductsTable'
+import { useParams } from 'react-router-dom'
 
 const Products: React.FC = () => {
-  const { currentUser, logout } = useContext(AuthContext)
-  const handleButtonClick = () => {
-    logout()
-  }
+
+  let { table_id } = useParams();
 
   return (
     <>
-      <Button onClick={()=> handleButtonClick()}>Logout</Button>
+      <Navbar />
+      <ProductsTable table_id={table_id!}/>
     </>
   )
 }

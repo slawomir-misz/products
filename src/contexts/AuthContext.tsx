@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, onAuthStateChanged, signOut, setPersistence
 import { auth } from "../firebase-config"
 import Loading from "../components/loading/Loading";
 
-type ContextProps = {
+interface IAuthContext {
   currentUser: firebase.UserInfo | null;
   login: any;
   logout: any;
@@ -16,7 +16,7 @@ const initialContextValues = {
   logout: null
 }
 
-export const AuthContext = React.createContext<ContextProps>(initialContextValues);
+export const AuthContext = React.createContext<IAuthContext>(initialContextValues);
 
 
 export const AuthProvider = ({children} : {children: React.ReactChild}) => {
