@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import SendPasswordReset from "./views/SendPasswordReset";
 import PasswordReset from "./views/PasswordReset";
+import { ProductsProvider } from "./contexts/ProductsContext";
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,9 @@ const App: React.FC = () => {
           path="products/:table_id"
           element={
             <ProtectedRoutes>
-              <Products />
+              <ProductsProvider>
+                <Products />
+              </ProductsProvider>
             </ProtectedRoutes>
           }
         />

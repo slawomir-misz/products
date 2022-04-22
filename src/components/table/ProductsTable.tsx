@@ -1,84 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Table } from "antd";
-import { collection, getDocs } from "firebase/firestore";
-import { firestore } from "../../firebase-config";
+import TableFormCell from "../tableFormCell/TableFormCell";
+import { ProductsContext } from "../../contexts/ProductsContext"
+import { Product } from '../../ts/types'
+import { useParams } from "react-router-dom";
+const ProductsTable: React.FC = () => {
 
-type Product = {
-  key: string,
-  name: string,
-  quantity: number,
-  total_order: number,
-  last_order: number,
-  type: string
-}
+  let { table_id } = useParams();
 
-
-interface ProductsTableProps {
-  table_id: string;
-}
-
-const ProductsTable: React.FC<ProductsTableProps> = ({ table_id }) => {
-
-const columns = [
+  const columns = [
     {
-      title: "Name",
+      title: "Produkt",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Quantity",
+      title: "Szacowana Ilość",
       dataIndex: "quantity",
       key: "quantity",
     },
     {
-      title: "Type",
+      title: "Typ",
       dataIndex: "type",
       key: "type",
     },
     {
-      title: "Ordered",
+      title: "Zamówiono",
       dataIndex: "total_order",
       key: "total_order",
     },
     {
-      title: "Last Order",
+      title: "Pozostało",
+      dataIndex: "left",
+      key: "left",
+    },
+    {
+      title: "Ostatnie zamówienie",
       dataIndex: "last_order",
       key: "last_order",
+      render: (text:string, record: Product) => (
+        <TableFormCell record={record} key={record.key} table_id={table_id!}/>
+      ),
     },
   ];
 
+  const { products, loading } = useContext(ProductsContext)
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const getData = () => {
-    setLoading(true);
-    getDocs(collection(firestore, table_id))
-      .then((response) => {
-        let array :Product[] = []
-        response.forEach((doc) => {
-
-          let object:Product = {
-            key: doc.id,
-            name: doc.id,
-            quantity: doc.data().quantity,
-            total_order: doc.data().total_order,
-            last_order: doc.data().last_order,
-            type: doc.data().type
-          }
-          array.push(object)
-        });
-        setProducts(array)
-        setLoading(false);
-      })
-      .catch((error) => {});
-  };
-
-  useEffect(() => {
-    getData();
-  }, [table_id]);
-
-  return <Table columns={columns} dataSource={products} loading={loading}/>;
+  return (
+    <Table
+      size="small"
+      columns={columns}
+      dataSource={products}
+      loading={loading}
+    />
+  );
 };
 
 export default ProductsTable;

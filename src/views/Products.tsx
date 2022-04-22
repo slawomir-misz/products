@@ -1,18 +1,22 @@
 import React from 'react'
 import Navbar from '../components/navBar/NavBar'
 import ProductsTable from '../components/table/ProductsTable'
-import { useParams } from 'react-router-dom'
+import styled from 'styled-components'
 
 const Products: React.FC = () => {
-
-  let { table_id } = useParams();
 
   return (
     <>
       <Navbar />
-      <ProductsTable table_id={table_id!}/>
+      <TableContainer>
+        <ProductsTable/>
+      </TableContainer>
     </>
   )
 }
 
 export default Products
+
+const TableContainer = styled.div`
+padding-top:2rem
+`
