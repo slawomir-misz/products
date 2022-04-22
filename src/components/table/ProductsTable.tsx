@@ -1,12 +1,21 @@
-import React, { useContext } from "react";
-import { Table } from "antd";
+import React, { useState, useContext } from "react";
+import { Table, Input } from "antd";
 import TableFormCell from "../tableFormCell/TableFormCell";
-import { ProductsContext } from "../../contexts/ProductsContext"
-import { Product } from '../../ts/types'
+import { ProductsContext } from "../../contexts/ProductsContext";
+import { Product } from "../../ts/types";
 import { useParams } from "react-router-dom";
-const ProductsTable: React.FC = () => {
 
+const ProductsTable: React.FC = () => {
   let { table_id } = useParams();
+  const { products, loading } = useContext(ProductsContext);
+  const [searchInput, setSearchInput] = useState<string>("")
+  const [filteredProducts, setFilteredProducts] = useState<Array<Product>>([])
+
+  const handleInputChange = (value:string) => {
+    setSearchInput(value.toLowerCase())
+    const filterProducts = products.filter(item => item.key.toLowerCase().includes(searchInput))
+    setFilteredProducts(filterProducts)
+  }
 
   const columns = [
     {
@@ -38,21 +47,28 @@ const ProductsTable: React.FC = () => {
       title: "Ostatnie zamówienie",
       dataIndex: "last_order",
       key: "last_order",
-      render: (text:string, record: Product) => (
-        <TableFormCell record={record} key={record.key} table_id={table_id!}/>
+      render: (text: string, record: Product) => (
+        <TableFormCell record={record} key={record.key} table_id={table_id!} />
       ),
     },
   ];
 
-  const { products, loading } = useContext(ProductsContext)
 
   return (
-    <Table
-      size="small"
-      columns={columns}
-      dataSource={products}
-      loading={loading}
-    />
+    <>
+      <Input.Search
+        allowClear
+        placeholder="Search product"
+        style={{ padding: "2rem" }}
+        onChange={(e)=> handleInputChange(e.target.value)}
+      />
+      <Table
+        size="small"
+        columns={columns}
+        dataSource={searchInput ? filteredProducts : products}
+        loading={loading}
+      />
+    </>
   );
 };
 

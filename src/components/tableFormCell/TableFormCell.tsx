@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { InputNumber, Form, Input, Button } from "antd";
+import { Form, Input, Button } from "antd";
 import { Product } from "../../ts/types";
 import { updateDoc, doc } from "firebase/firestore";
 import { firestore } from "../../firebase-config";
@@ -19,7 +19,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
   const { products, setProducts } = useContext(ProductsContext);
 
   const onFinish = (values: any) => {
-
+    
     setLoading(true);
 
     const lastOrderInputValue = parseFloat(values[record.key].replace(/,/g, '.'));
@@ -50,7 +50,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(/^[0-9]+$/.test(e.target.value))
+    if(/^[0-9]+([,.][0-9]+)?$/.test(e.target.value))
       setDisabled(false)
     else
       setDisabled(true)
@@ -67,7 +67,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
             {
               required: true,
               pattern: new RegExp(
-                /^[0-9]+([\,\.][0-9]+)?$/
+                /^[0-9]+([,.][0-9]+)?$/
               ),
               message: "Wrong value"
             }
@@ -76,6 +76,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
           <Input
             onChange={(e) => handleInputChange(e)}
             style={{ maxWidth: 83 }}
+            autoComplete="off"
           />
         </Form.Item>
         <Button
