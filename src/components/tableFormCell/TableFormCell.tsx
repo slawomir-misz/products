@@ -19,9 +19,10 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
   const { products, setProducts } = useContext(ProductsContext);
 
   const onFinish = (values: any) => {
+
     setLoading(true);
 
-    const lastOrderInputValue = values[record.key];
+    const lastOrderInputValue = parseFloat(values[record.key].replace(/,/g, '.'));
     const productsCollection = doc(firestore, table_id, record.key);
 
     updateDoc(productsCollection, {
@@ -41,12 +42,19 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
 
         setProducts(tmpArray);
         setLoading(false);
-        
+
       })
       .catch(() => {});
 
     setDisabled(true);
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(/^[0-9]+$/.test(e.target.value))
+      setDisabled(false)
+    else
+      setDisabled(true)
+  }
 
   return (
     <Form onFinish={onFinish}>
@@ -55,10 +63,18 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
           name={record.key}
           initialValue={record.last_order}
           style={{ margin: 0 }}
+          rules={[
+            {
+              required: true,
+              pattern: new RegExp(
+                /^[0-9]+([\,\.][0-9]+)?$/
+              ),
+              message: "Wrong value"
+            }
+          ]}
         >
-          <InputNumber
-            min={0}
-            onChange={(value) => setDisabled(false)}
+          <Input
+            onChange={(e) => handleInputChange(e)}
             style={{ maxWidth: 83 }}
           />
         </Form.Item>
