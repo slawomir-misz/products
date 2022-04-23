@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Products from "./views/Products";
 import Login from "./views/Login";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
@@ -12,15 +12,23 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route
-          path="products/:table_id"
-          element={
-            <ProtectedRoutes>
-              <ProductsProvider>
-                <Products />
-              </ProductsProvider>
-            </ProtectedRoutes>
-          }
+          path="/"
+          element={<Navigate to="products/products_1" replace />}
         />
+
+        <Route path="products">
+          <Route
+            path=":table_id"
+            element={
+              <ProtectedRoutes>
+                <ProductsProvider>
+                  <Products />
+                </ProductsProvider>
+              </ProtectedRoutes>
+            }
+          />
+          <Route index element={<Navigate to="products_1" replace />} />
+        </Route>
         <Route path="login" element={<Login />} />
         <Route path="password_reset">
           <Route index={true} element={<SendPasswordReset />} />
