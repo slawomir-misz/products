@@ -1,4 +1,4 @@
-import React, { FunctionComponent, VoidFunctionComponent } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Alert } from "antd";
 import { fadeInUp } from "react-animations";

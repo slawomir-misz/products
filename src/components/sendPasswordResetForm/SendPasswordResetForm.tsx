@@ -3,8 +3,6 @@ import { Form, Input, Button, Result } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../firebase-config";
-import styled, { keyframes } from "styled-components";
-import { fadeInUp } from "react-animations";
 import { useNavigate } from 'react-router-dom';
 import ErrorPopUp from "../errorPopUp/ErrorPopUp";
 import reducer from '../../reducers/ErrorReducer'
@@ -93,12 +91,3 @@ const SendPasswordResetForm: React.FC = () => {
 };
 
 export default SendPasswordResetForm;
-
-const fadeInUpAnimation = keyframes`${fadeInUp}`;
-
-const StyledAlert = styled.div`
-  top: -64px;
-  width: 100%;
-  position: absolute;
-  animation: 1s ${fadeInUpAnimation};
-`;

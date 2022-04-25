@@ -4,6 +4,8 @@ import TableFormCell from "../tableFormCell/TableFormCell";
 import { ProductsContext } from "../../contexts/ProductsContext";
 import { Product } from "../../ts/types";
 import { useParams } from "react-router-dom";
+import styled from "styled-components"
+import ButtonPDF from "../butttonPDF/ButtonPDF";
 
 const ProductsTable: React.FC = () => {
   let { table_id } = useParams();
@@ -13,7 +15,7 @@ const ProductsTable: React.FC = () => {
 
   const handleInputChange = (value:string) => {
     setSearchInput(value.toLowerCase())
-    const filterProducts = products.filter(item => item.key.toLowerCase().includes(searchInput))
+    const filterProducts = products.filter(item => item.name.toLowerCase().includes(searchInput))
     setFilteredProducts(filterProducts)
   }
 
@@ -48,7 +50,7 @@ const ProductsTable: React.FC = () => {
       dataIndex: "last_order",
       key: "last_order",
       render: (text: string, record: Product) => (
-        <TableFormCell record={record} key={record.key} table_id={table_id!} />
+        <TableFormCell record={record} key={record.id} table_id={table_id!} />
       ),
     },
   ];
@@ -56,20 +58,31 @@ const ProductsTable: React.FC = () => {
 
   return (
     <>
-      <Input.Search
-        allowClear
-        placeholder="Search product"
-        style={{ padding: "2rem" }}
-        onChange={(e)=> handleInputChange(e.target.value)}
-      />
+      <StyledContainer>
+        <Input.Search
+          allowClear
+          placeholder="Search product"
+          style={{ maxWidth: 500 }}
+          onChange={(e)=> handleInputChange(e.target.value)}
+        />
+        <ButtonPDF products={products}/>
+      </StyledContainer>
       <Table
         size="small"
         columns={columns}
         dataSource={searchInput ? filteredProducts : products}
         loading={loading}
+        rowKey="id"
       />
     </>
   );
 };
 
 export default ProductsTable;
+
+const StyledContainer = styled.div`
+display: flex; 
+justify-content: space-between; 
+align-items: center;
+padding: 1rem;
+`

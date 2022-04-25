@@ -3,8 +3,7 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import { fadeInUp } from "react-animations";
+import styled from "styled-components";
 import IconLogo from "../iconLogo/IconLogo";
 import ErrorPopUp from "../errorPopUp/ErrorPopUp";
 import reducer from "../../reducers/ErrorReducer";
@@ -115,19 +114,11 @@ const LoginForm: React.FC = () => {
 
 export default LoginForm;
 
-const fadeInUpAnimation = keyframes`${fadeInUp}`;
-
 const StyledFlexAndSpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const StyledAlert = styled.div`
-  top: -64px;
-  width: 100%;
-  position: absolute;
-  animation: 1s ${fadeInUpAnimation};
-`;
 const StyledTitle = styled.div`
   display: flex;
   justify-content: center;

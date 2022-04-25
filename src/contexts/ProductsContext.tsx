@@ -32,8 +32,8 @@ export const ProductsProvider = ({ children } : { children: React.ReactChild }) 
         let tmpProductsArray: Product[] = [];
         response.forEach((doc) => {
           let object: Product = {
-            key: doc.id,
-            name: doc.id,
+            id: doc.id,
+            name: doc.data().name,
             quantity: doc.data().quantity,
             total_order: doc.data().total_order,
             last_order: doc.data().last_order,

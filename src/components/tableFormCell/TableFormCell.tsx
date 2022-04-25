@@ -22,8 +22,8 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
     
     setLoading(true);
 
-    const lastOrderInputValue = parseFloat(values[record.key].replace(/,/g, '.'));
-    const productsCollection = doc(firestore, table_id, record.key);
+    const lastOrderInputValue = parseFloat(values[record.name].replace(/,/g, '.'));
+    const productsCollection = doc(firestore, table_id, record.id);
 
     updateDoc(productsCollection, {
       last_order: lastOrderInputValue,
@@ -32,10 +32,11 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
     })
       .then(() => {
 
-        const index = products.findIndex((object) => object.key === record.key);
+        const index = products.findIndex((object) => object.id === record.id);
         let tmpArray = [...products];
         tmpArray[index] = {
           ...tmpArray[index],
+          last_order: lastOrderInputValue,
           total_order: record.total_order + lastOrderInputValue,
           left: record.left - lastOrderInputValue,
         };
@@ -60,7 +61,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
     <Form onFinish={onFinish}>
       <Input.Group compact>
         <Form.Item
-          name={record.key}
+          name={record.id}
           initialValue={record.last_order}
           style={{ margin: 0 }}
           rules={[
