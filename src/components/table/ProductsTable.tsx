@@ -14,8 +14,8 @@ const ProductsTable: React.FC = () => {
   const [filteredProducts, setFilteredProducts] = useState<Array<Product>>([])
 
   const handleInputChange = (value:string) => {
-    setSearchInput(value.toLowerCase())
-    const filterProducts = products.filter(item => item.name.toLowerCase().includes(searchInput))
+    const filterProducts = products.filter(item => item.name.toLowerCase().includes(value.toLowerCase()))
+    setSearchInput(value)
     setFilteredProducts(filterProducts)
   }
 

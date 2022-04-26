@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button  } from "antd";
+import { RollbackOutlined } from "@ant-design/icons"
 import { Product } from "../../ts/types";
 import { updateDoc, doc } from "firebase/firestore";
 import { firestore } from "../../firebase-config";
@@ -10,19 +11,18 @@ interface TableFormCellInterface {
   table_id: string;
 }
 
-const TableFormCell: React.FC<TableFormCellInterface> = ({
-  record,
-  table_id,
-}) => {
+const TableFormCell: React.FC<TableFormCellInterface> = ({ record, table_id }) => {
+  const [form] = Form.useForm();
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const { products, setProducts } = useContext(ProductsContext);
 
   const onFinish = (values: any) => {
-    
     setLoading(true);
 
-    const lastOrderInputValue = parseFloat(values[record.name].replace(/,/g, '.'));
+    const lastOrderInputValue = parseFloat(
+      values[record.id].replace(/,/g, ".")
+    );
     const productsCollection = doc(firestore, table_id, record.id);
 
     updateDoc(productsCollection, {
@@ -31,7 +31,6 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
       left: record.left - lastOrderInputValue,
     })
       .then(() => {
-
         const index = products.findIndex((object) => object.id === record.id);
         let tmpArray = [...products];
         tmpArray[index] = {
@@ -43,7 +42,6 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
 
         setProducts(tmpArray);
         setLoading(false);
-
       })
       .catch(() => {});
 
@@ -51,14 +49,17 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(/^[0-9]+([,.][0-9]+)?$/.test(e.target.value))
-      setDisabled(false)
-    else
-      setDisabled(true)
-  }
+    if (/^[0-9]+([,.][0-9]+)?$/.test(e.target.value)) setDisabled(false);
+    else setDisabled(true);
+  };
+
+  const handleReturnButtonClick = () => {
+    form.setFieldsValue({ [record.id]: record.last_order })
+    setDisabled(true)
+  };
 
   return (
-    <Form onFinish={onFinish}>
+    <Form onFinish={onFinish} form={form}>
       <Input.Group compact>
         <Form.Item
           name={record.id}
@@ -67,11 +68,9 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
           rules={[
             {
               required: true,
-              pattern: new RegExp(
-                /^[0-9]+([,.][0-9]+)?$/
-              ),
-              message: "Wrong value"
-            }
+              pattern: new RegExp(/^[0-9]+([,.][0-9]+)?$/),
+              message: "Wrong value",
+            },
           ]}
         >
           <Input
@@ -89,6 +88,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({
         >
           Save
         </Button>
+        <Button block icon={<RollbackOutlined />} onClick={handleReturnButtonClick} style={!disabled ? {width:35} : {visibility: "hidden", width:35}  } />
       </Input.Group>
     </Form>
   );
