@@ -72,7 +72,7 @@ const ProductsTable: React.FC = () => {
         columns={columns}
         dataSource={searchInput ? filteredProducts : products}
         loading={loading}
-        rowKey="id"
+        rowKey={record => record.id}
       />
     </>
   );
