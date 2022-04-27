@@ -20,9 +20,8 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({ record, table_id }) =
   const onFinish = (values: any) => {
     setLoading(true);
 
-    const lastOrderInputValue = parseFloat(
-      values[record.id].replace(/,/g, ".")
-    );
+    const lastOrderInputValue = parseFloat(values[record.id].replace(/,/g, "."));
+    
     const productsCollection = doc(firestore, table_id, record.id);
 
     updateDoc(productsCollection, {
@@ -36,8 +35,8 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({ record, table_id }) =
         tmpArray[index] = {
           ...tmpArray[index],
           last_order: lastOrderInputValue,
-          total_order: record.total_order + lastOrderInputValue,
-          left: record.left - lastOrderInputValue,
+          total_order: parseFloat((record.total_order + lastOrderInputValue).toFixed(2)),
+          left: parseFloat((record.left - lastOrderInputValue).toFixed(2)),
         };
 
         setProducts(tmpArray);
@@ -49,7 +48,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({ record, table_id }) =
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (/^[0-9]+([,.][0-9]+)?$/.test(e.target.value)) setDisabled(false);
+    if (/^[0-9]+([,.][0-9]{1,2})?$/.test(e.target.value)) setDisabled(false);
     else setDisabled(true);
   };
 
@@ -68,7 +67,7 @@ const TableFormCell: React.FC<TableFormCellInterface> = ({ record, table_id }) =
           rules={[
             {
               required: true,
-              pattern: new RegExp(/^[0-9]+([,.][0-9]+)?$/),
+              pattern: new RegExp(/^[0-9]+([,.][0-9]{1,2})?$/),
               message: "Wrong value",
             },
           ]}
