@@ -15,11 +15,14 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project is a simple app for friend, which needed it for simplify his work with products managment.
-App contains export to pdf, searching, authorization module, and most of crud operations.
+This project is a simple app for friend, which needed it for simplify his work with products managment.</br>
+App contains export to pdf, searching, authorization module, and most of crud operations.</br>
+</br></br>
 
 ![Alt Text](https://media.giphy.com/media/d4zc1atkDog6nl7rsc/giphy.gif)
 ![Alt Text](https://media.giphy.com/media/c5Ynrhy0sSxFk3xsna/giphy.gif)
+
+</br>
 
 ### Built With
 
