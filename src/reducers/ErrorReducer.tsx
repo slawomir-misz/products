@@ -1,4 +1,8 @@
-export default function reducer(errorState: string, errorCode: string): any {
+type errorState = {
+  message: string
+}
+
+export default function reducer(errorState: errorState, errorCode: string) {
     switch (errorCode) {
       case "":
         return { message: "" };

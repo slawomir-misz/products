@@ -7,22 +7,20 @@ import { useNavigate } from 'react-router-dom';
 import ErrorPopUp from "../errorPopUp/ErrorPopUp";
 import reducer from '../../reducers/ErrorReducer'
 
-type values = {
+type formValues = {
   username: string;
 };
-
-
 
 const SendPasswordResetForm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [errorState, dispatchErrorState] = useReducer(
     reducer,
-    ""
+    {message: ""}
   );
   const navigate = useNavigate();
 
-  const onFinish = (values: values) => {
+  const onFinish = (values: formValues) => {
     setLoading(true);
     sendPasswordResetEmail(auth, values.username)
       .then(() => {

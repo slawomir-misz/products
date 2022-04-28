@@ -11,13 +11,18 @@ interface TableFormCellInterface {
   table_id: string;
 }
 
+type formValues = {
+  [key: string]: string
+}
+
 const TableFormCell: React.FC<TableFormCellInterface> = ({ record, table_id }) => {
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
   const { products, setProducts } = useContext(ProductsContext);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: formValues) => {
+    console.log(values)
     setLoading(true);
 
     const lastOrderInputValue = parseFloat(values[record.id].replace(/,/g, "."));

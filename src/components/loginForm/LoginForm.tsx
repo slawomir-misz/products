@@ -8,7 +8,7 @@ import IconLogo from "../iconLogo/IconLogo";
 import ErrorPopUp from "../errorPopUp/ErrorPopUp";
 import reducer from "../../reducers/ErrorReducer";
 
-type values = {
+type formValues = {
   username: string;
   password: string;
   remember: boolean;
@@ -18,9 +18,9 @@ const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [loading, setLoading] = useState<boolean>(false);
-  const [errorState, dispatchErrorState] = useReducer(reducer, "");
+  const [errorState, dispatchErrorState] = useReducer(reducer, {message: ""});
 
-  const onFinish = (values: values): void => {
+  const onFinish = (values: formValues) => {
     dispatchErrorState("");
     setLoading(true);
 

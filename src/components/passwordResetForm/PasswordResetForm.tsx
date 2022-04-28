@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorPopUp from "../errorPopUp/ErrorPopUp";
 import reducer from '../../reducers/ErrorReducer'
 
-type values = {
+type formValues = {
   password: string;
 };
 
@@ -18,19 +18,19 @@ const PasswordResetForm: React.FC = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [errorState, dispatchErrorState] = useReducer(
     reducer,
-    ""
+    {message: ""}
   );
   const navigate = useNavigate();
 
-  const actionCode: any = searchParams.get("oobCode");
+  const actionCode = searchParams.get("oobCode");
 
-  const onFinish = (values: values) => {
+  const onFinish = (values: formValues) => {
     dispatchErrorState("");
     setLoading(true);
 
-    verifyPasswordResetCode(auth, actionCode)
+    verifyPasswordResetCode(auth, actionCode!)
       .then(() => {
-        confirmPasswordReset(auth, actionCode, values.password)
+        confirmPasswordReset(auth, actionCode!, values.password)
           .then(() => {
             setLoading(false);
             setSuccess(true);
