@@ -1,31 +1,32 @@
-import React, { useState, useReducer } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Form, Input, Button, Result } from "antd";
-import { LockOutlined } from "@ant-design/icons";
-import { verifyPasswordResetCode, confirmPasswordReset } from "firebase/auth";
-import { auth } from "../../firebase-config";
-import { useNavigate } from "react-router-dom";
-import ErrorPopUp from "../errorPopUp/ErrorPopUp";
-import reducer from '../../reducers/ErrorReducer'
+import React, { useState, useReducer } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import {
+  Form, Input, Button, Result,
+} from 'antd';
+import { LockOutlined } from '@ant-design/icons';
+import { verifyPasswordResetCode, confirmPasswordReset } from 'firebase/auth';
+import { auth } from '../../firebase-config';
+import ErrorPopUp from '../errorPopUp/ErrorPopUp';
+import reducer from '../../reducers/ErrorReducer';
 
 type formValues = {
   password: string;
 };
 
 const PasswordResetForm: React.FC = () => {
-  let [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [errorState, dispatchErrorState] = useReducer(
     reducer,
-    {message: ""}
+    { message: '' },
   );
   const navigate = useNavigate();
 
-  const actionCode = searchParams.get("oobCode");
+  const actionCode = searchParams.get('oobCode');
 
   const onFinish = (values: formValues) => {
-    dispatchErrorState("");
+    dispatchErrorState('');
     setLoading(true);
 
     verifyPasswordResetCode(auth, actionCode!)
@@ -54,7 +55,7 @@ const PasswordResetForm: React.FC = () => {
           dispatchErrorState={dispatchErrorState}
         />
       ) : (
-        <></>
+        null
       )}
       {success ? (
         <Result
@@ -64,7 +65,7 @@ const PasswordResetForm: React.FC = () => {
             <Button
               type="primary"
               key="console"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate('/login')}
             >
               Return to login
             </Button>,
@@ -77,7 +78,7 @@ const PasswordResetForm: React.FC = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your Password!",
+                message: 'Please input your Password!',
               },
             ]}
           >
@@ -90,23 +91,23 @@ const PasswordResetForm: React.FC = () => {
           </Form.Item>
           <Form.Item
             name="confirm"
-            dependencies={["password"]}
+            dependencies={['password']}
             hasFeedback
             rules={[
               {
                 required: true,
-                message: "Please confirm your password!",
+                message: 'Please confirm your password!',
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
+                  if (!value || getFieldValue('password') === value) {
                     return Promise.resolve();
                   }
 
                   return Promise.reject(
                     new Error(
-                      "The two passwords that you entered do not match!"
-                    )
+                      'The two passwords that you entered do not match!',
+                    ),
                   );
                 },
               }),

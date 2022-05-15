@@ -1,12 +1,14 @@
-import React, { useContext, useReducer, useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../contexts/AuthContext";
-import { useNavigate, Link } from "react-router-dom";
-import styled from "styled-components";
-import IconLogo from "../iconLogo/IconLogo";
-import ErrorPopUp from "../errorPopUp/ErrorPopUp";
-import reducer from "../../reducers/ErrorReducer";
+import React, { useContext, useReducer, useState } from 'react';
+import {
+  Form, Input, Button, Checkbox,
+} from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useNavigate, Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { AuthContext } from '../../contexts/AuthContext';
+import IconLogo from '../iconLogo/IconLogo';
+import ErrorPopUp from '../errorPopUp/ErrorPopUp';
+import reducer from '../../reducers/ErrorReducer';
 
 type formValues = {
   username: string;
@@ -14,20 +16,33 @@ type formValues = {
   remember: boolean;
 };
 
+const StyledFlexAndSpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const StyledTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 24px;
+  font-size: 35px;
+`;
+
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [loading, setLoading] = useState<boolean>(false);
-  const [errorState, dispatchErrorState] = useReducer(reducer, {message: ""});
+  const [errorState, dispatchErrorState] = useReducer(reducer, { message: '' });
 
   const onFinish = (values: formValues) => {
-    dispatchErrorState("");
+    dispatchErrorState('');
     setLoading(true);
 
     login(values.username, values.password, values.remember)
       .then(() => {
         setLoading(false);
-        navigate("/products");
+        navigate('/products');
       })
       .catch((error: any) => {
         setLoading(false);
@@ -37,17 +52,19 @@ const LoginForm: React.FC = () => {
 
   return (
     <>
-      {errorState.message ? (
+      {errorState.message && (
         <ErrorPopUp
           message={errorState.message}
           dispatchErrorState={dispatchErrorState}
         />
-      ) : (
-        <></>
       )}
 
       <StyledTitle>
-        Products App [ <IconLogo /> ]
+        Products App [
+        {' '}
+        <IconLogo />
+        {' '}
+        ]
       </StyledTitle>
 
       <Form name="normal_login" className="login-form" onFinish={onFinish}>
@@ -55,12 +72,12 @@ const LoginForm: React.FC = () => {
           name="username"
           rules={[
             {
-              type: "email",
-              message: "The input is not valid E-mail!",
+              type: 'email',
+              message: 'The input is not valid E-mail!',
             },
             {
               required: true,
-              message: "Please input your Username!",
+              message: 'Please input your Username!',
             },
           ]}
         >
@@ -75,7 +92,7 @@ const LoginForm: React.FC = () => {
           rules={[
             {
               required: true,
-              message: "Please input your Password!",
+              message: 'Please input your Password!',
             },
           ]}
         >
@@ -113,16 +130,3 @@ const LoginForm: React.FC = () => {
 };
 
 export default LoginForm;
-
-const StyledFlexAndSpaceBetween = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const StyledTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 24px;
-  font-size: 35px;
-`;

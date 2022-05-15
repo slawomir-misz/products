@@ -1,27 +1,27 @@
-import React from "react";
-import { Button } from "antd";
+import React from 'react';
+import { Button } from 'antd';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { Product } from '../../ts/types'
-import { font } from "../../assets/font";
+import { Product } from '../../ts/types';
+import { font } from '../../assets/font';
 
 interface IButtonPDF {
-    products: Array<Product>
+  products: Array<Product>
 }
 
-const ButtonPDF: React.FC<IButtonPDF> = ({products}) => {
-
+const ButtonPDF: React.FC<IButtonPDF> = ({ products }) => {
   const handleButtonClick = () => {
+    // eslint-disable-next-line new-cap
     const doc = new jsPDF();
-    doc.addFileToVFS("arial-unicode-ms-normal.ttf", font);
-    doc.addFont("arial-unicode-ms-normal.ttf", "arial-unicode-ms", "normal");
-    doc.setFont("arial-unicode-ms");
+    doc.addFileToVFS('arial-unicode-ms-normal.ttf', font);
+    doc.addFont('arial-unicode-ms-normal.ttf', 'arial-unicode-ms', 'normal');
+    doc.setFont('arial-unicode-ms');
 
     autoTable(doc, {
       styles: {
-        font: "arial-unicode-ms",
+        font: 'arial-unicode-ms',
         lineWidth: 0.1,
-        lineColor: [0,0,0],
+        lineColor: [0, 0, 0],
         cellPadding: 1,
       },
       body: products,
@@ -33,8 +33,8 @@ const ButtonPDF: React.FC<IButtonPDF> = ({products}) => {
         { header: 'Pozostało', dataKey: 'left' },
         { header: 'Ost. zamówienie', dataKey: 'last_order' },
       ],
-    })
-    doc.save("a4.pdf");
+    });
+    doc.save('a4.pdf');
   };
 
   return (

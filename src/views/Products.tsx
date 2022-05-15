@@ -1,15 +1,12 @@
-import React from 'react'
-import Navbar from '../components/navBar/NavBar'
-import ProductsTable from '../components/table/ProductsTable'
+import React from 'react';
+import Navbar from '../components/navBar/NavBar';
+import ProductsTable from '../components/table/ProductsTable';
 
-const Products: React.FC = () => {
+const Products: React.FC = () => (
+  <>
+    <Navbar />
+    <ProductsTable />
+  </>
+);
 
-  return (
-    <>
-      <Navbar />
-      <ProductsTable/>
-    </>
-  )
-}
-
-export default Products
+export default Products;

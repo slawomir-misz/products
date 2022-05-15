@@ -1,11 +1,13 @@
-import React, { useState, useReducer } from "react";
-import { Form, Input, Button, Result } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { sendPasswordResetEmail } from "firebase/auth";
-import { auth } from "../../firebase-config";
+import React, { useState, useReducer } from 'react';
+import {
+  Form, Input, Button, Result,
+} from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import ErrorPopUp from "../errorPopUp/ErrorPopUp";
-import reducer from '../../reducers/ErrorReducer'
+import { auth } from '../../firebase-config';
+import ErrorPopUp from '../errorPopUp/ErrorPopUp';
+import reducer from '../../reducers/ErrorReducer';
 
 type formValues = {
   username: string;
@@ -16,7 +18,7 @@ const SendPasswordResetForm: React.FC = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [errorState, dispatchErrorState] = useReducer(
     reducer,
-    {message: ""}
+    { message: '' },
   );
   const navigate = useNavigate();
 
@@ -36,17 +38,17 @@ const SendPasswordResetForm: React.FC = () => {
   return (
     <>
       {errorState.message ? (
-        <ErrorPopUp message={errorState.message} dispatchErrorState={dispatchErrorState}/>
+        <ErrorPopUp message={errorState.message} dispatchErrorState={dispatchErrorState} />
       ) : (
-        <></>
+        null
       )}
       {success ? (
         <Result
           status="success"
           title="Check your email address"
           extra={[
-            <Button type="primary" key="console" onClick={()=> navigate('/login')}>
-              Return to login 
+            <Button type="primary" key="console" onClick={() => navigate('/login')}>
+              Return to login
             </Button>,
           ]}
         />
@@ -56,12 +58,12 @@ const SendPasswordResetForm: React.FC = () => {
             name="username"
             rules={[
               {
-                type: "email",
-                message: "The input is not valid E-mail!",
+                type: 'email',
+                message: 'The input is not valid E-mail!',
               },
               {
                 required: true,
-                message: "Please input your Username!",
+                message: 'Please input your Username!',
               },
             ]}
           >

@@ -6,4 +6,4 @@ export type Product = {
     last_order: number;
     type: string;
     left: number;
-};
+}
